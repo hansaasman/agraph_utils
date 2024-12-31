@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+#vs code workspace
+.vscode/
+agraph_utils.code-workspace
+
 # C extensions
 *.so
 

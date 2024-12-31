@@ -19,3 +19,9 @@ the BufferTriples class allows the user to quickly add large sets
 of triples. You can either add triples individually with `add_triple` 
 or you can add a list to the buffer as `add_triples`.
 
+### GeoJSON
+
+This class allows you to easily convert various coordinates of
+points/lines/multipolygons into RDF Literals that can be used
+for GeoSPARQL.
+

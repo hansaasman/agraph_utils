@@ -4,6 +4,8 @@ from franz.openrdf.query.query import QueryLanguage
 import pandas as pd
 from typing import Union
 
+from utilities import query
+
 class VectorSearch:
     def __init__(self,
                  conn: RepositoryConnection,
@@ -43,24 +45,8 @@ class VectorSearch:
                     ( ?uri ?score ?originalText )
                        llm:nearestNeighbor
                     ( "{text}" "{self.vdb}" {str(n)} {str(minScore)} ) . }}"""
-            if results_format == "df":
-                with self.conn.executeTupleQuery(query_string) as result:
-                    return result.toPandas()
-            elif results_format == "list":
-                result = self.conn.prepareTupleQuery(QueryLanguage.SPARQL,
-                                                    query_string).evaluate()
-                response = []
-                with result:
-                    for binding_set in result:
-                        response.append(binding_set._toDict())
-                return response
-            elif results_format == "generator":
-                result = self.conn.prepareTupleQuery(QueryLanguage.SPARQL,
-                                                    query_string).evaluate()
-                return result
-            else:
-                raise ValueError("results_format must be 'df', 'list', or 'generator'")
-
+            return query(self.conn, query_string, results_format)
+            
     def ask_my_documents(self,
                        text: str,
                        n: int = 10,
@@ -73,20 +59,5 @@ class VectorSearch:
                 ( ?response ?score ?citation ?content )
                    llm:askMyDocuments
                 ( "{text}" "{self.vdb}" {str(n)} {str(minScore)} ) . }}"""
-        if results_format == "df":
-            with self.conn.executeTupleQuery(query_string) as result:
-                return result.toPandas()
-        elif results_format == "list":
-            result = self.conn.prepareTupleQuery(QueryLanguage.SPARQL,
-                                                query_string).evaluate()
-            response = []
-            with result:
-                for binding_set in result:
-                    response.append(binding_set._toDict())
-            return response
-        elif results_format == "generator":
-            result = self.conn.prepareTupleQuery(QueryLanguage.SPARQL,
-                                                query_string).evaluate()
-            return result
-        else:
-            raise ValueError("results_format must be 'df', 'list', or 'generator'")
+        return query(self.conn, query_string, results_format)
+        

@@ -25,3 +25,9 @@ This class allows you to easily convert various coordinates of
 points/lines/multipolygons into RDF Literals that can be used
 for GeoSPARQL.
 
+### Vector Search
+
+This class allows you to easily use the base magic sparql predicates
+used in AllegroGraph for vector search. This assumes the user has
+a vector store with stored vectors.
+

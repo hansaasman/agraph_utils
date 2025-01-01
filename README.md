@@ -8,7 +8,7 @@ to use along with the `agraph-python` package.
 ## Installation
 
 ```bash
-pip install agraph_utils
+pip install agraph-utils
 ```
 
 ## Usage
